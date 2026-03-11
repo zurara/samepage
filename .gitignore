@@ -7,3 +7,4 @@ vite.config.js.timestamp-*
 dist/
 .claude/consolemsg/
 .claude/settings.local.json
+docs/
