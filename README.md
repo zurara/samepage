@@ -1,89 +1,85 @@
-# Samepage MMMMMVP
+# Samepage
 
-The minimal markdown workspace with Tiptap editor.
+An AI-native markdown workspace. Point it at any folder and get a rich editor, file browser, terminal, and GitHub sync — all in the browser.
 
-## Quick Start
+## Stack
+
+- **Frontend**: React + Vite + Plate.js editor
+- **Backend**: Node.js + Express
+- **Storage**: Local filesystem (plain markdown files)
+- **GitHub sync**: OAuth app — connects your workspace to a GitHub repo
+
+## Getting Started
 
 ```bash
-# 1. Install dependencies
-cd ~/Desktop/claude/samepage-mvp
+git clone https://github.com/zurara/samepage.git
+cd samepage
 npm install
-
-# 2. Make CLI executable
-chmod +x bin/samepage.js
-
-# 3. Create a test project
-mkdir ~/test-samepage
-cd ~/test-samepage
-
-# 4. Initialize workspace
-node ~/Desktop/claude/samepage-mvp/bin/samepage.js init
-
-# 5. Start server (browser opens automatically!)
-node ~/Desktop/claude/samepage-mvp/bin/samepage.js serve
+npx vite build
 ```
 
-## What Works
+Then either serve an existing folder:
 
-✅ File browser with tree view  
-✅ Tiptap markdown editor  
-✅ Save files (Cmd+S or button)  
-✅ Auto-open browser  
-✅ Live file watching  
+```bash
+node bin/samepage.js serve ~/my-notes
+```
 
-## What's Not Implemented Yet
+Or initialize a fresh workspace first:
 
-- WikiLinks `[[term]]`
-- Inline tags `#tag`
-- Kanban view
-- Git integration
-- Worktrees
-- MCP server
-- OpenSpec
-- Glossary
+```bash
+mkdir ~/my-workspace
+cd ~/my-workspace
+node /path/to/samepage/bin/samepage.js init
+node /path/to/samepage/bin/samepage.js serve
+```
 
-## Folder Structure Created by `init`
+Browser opens at **http://localhost:8000**.
+
+> Port 8000 is fixed — it's required for GitHub OAuth to work.
+
+## Workspace structure
+
+`init` creates this layout:
 
 ```
-your-project/
+your-workspace/
+├── docs/           general documentation
 ├── tasks/
 │   ├── backlog/
 │   ├── ready/
 │   ├── in-progress/
 │   ├── review/
 │   └── done/
-├── specs/
-├── glossary/
-├── docs/
-│   └── welcome.md
+├── specs/          specifications
+├── glossary/       terminology
 └── .samepage/
     └── config.json
 ```
 
-## Development with Claude Code
+You don't have to use `init` — Samepage will serve any folder as-is.
 
-Once this works, enhance it with:
+## GitHub sync
 
-```bash
-# Add WikiLinks
-cc "Add WikiLink support: [[term]] syntax with autocomplete and backlinks"
+To sync your workspace to a GitHub repo, you need a GitHub OAuth app:
 
-# Add inline tags
-cc "Add inline tag support: #tag syntax with filtering"
+1. Go to **Settings → Developer settings → OAuth Apps → New OAuth App**
+2. Set the callback URL to `http://localhost:8000/api/github/callback`
+3. Copy the Client ID and Client Secret into a `.env` file in the project root:
 
-# Add kanban view
-cc "Add kanban view that treats tasks/ folders as columns"
-
-# Add git integration
-cc "Add git auto-commit on save"
+```
+GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_client_secret
 ```
 
-## Tech Stack
+Then use the GitHub button in the editor to connect a repo and push your docs.
 
-- **Backend**: Node.js + Express
-- **Frontend**: React (via CDN) + Tiptap
-- **Storage**: Local filesystem + markdown files
-- **No build step**: Works immediately
+## CLI reference
+
+```
+node bin/samepage.js init                  Create workspace folders in current dir
+node bin/samepage.js serve                 Serve current directory
+node bin/samepage.js serve [path]          Serve a specific directory
+```
 
 ## License
 

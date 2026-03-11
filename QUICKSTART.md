@@ -1,82 +1,75 @@
-# 🚀 Quick Start - Test It Now!
+# Quick Start
 
-Your Samepage MMMMMVP is ready at:
-`~/Desktop/claude/samepage-mvp/`
+## Prerequisites
 
-## Run These Commands
+- [Node.js](https://nodejs.org/) v18 or later
 
-Open your terminal and run:
+## Setup (first time only)
 
 ```bash
-# 1. Go to project
-cd ~/Desktop/claude/samepage-mvp
+# Clone the repo
+git clone https://github.com/zurara/samepage.git
+cd samepage
 
-# 2. Install dependencies (first time only)
+# Install dependencies
 npm install
 
-# 3. Make CLI executable (first time only)
-chmod +x bin/samepage.js
-
-# 4. Create a test workspace
-mkdir ~/test-samepage
-cd ~/test-samepage
-
-# 5. Initialize workspace
-node ~/Desktop/claude/samepage-mvp/bin/samepage.js init
-
-# 6. Start server (browser opens automatically!)
-node ~/Desktop/claude/samepage-mvp/bin/samepage.js serve
+# Build the frontend
+npx vite build
 ```
 
-## What You'll See
-
-Browser opens at `http://127.0.0.1:3000` with:
-
-- **Left Sidebar**: File tree
-  - Click folders to expand/collapse
-  - Click `.md` files to edit
-  
-- **Right Panel**: Tiptap editor
-  - Edit markdown content
-  - Cmd+S (Mac) or Ctrl+S (Windows) to save
-  - Save button shows status
-
-## Try This
-
-1. Click `docs/welcome.md` in sidebar
-2. Edit the text
-3. Press Cmd+S to save
-4. See "✓ Saved" status
-5. Refresh page - changes persist!
-
-## Create New Files
-
-1. Create file: `echo "# My Note" > docs/my-note.md`
-2. Refresh browser
-3. Click `docs/my-note.md` to edit
-
-## Next Steps with Claude Code
-
-Once this works, enhance it:
+## Start the editor
 
 ```bash
-# In the samepage-mvp directory, ask Claude Code:
-cc "Add WikiLink support: [[term]] syntax with autocomplete"
-cc "Add inline tag support: #tag syntax"
-cc "Add kanban view for tasks/ folders"
+# Serve your current directory as a workspace
+node bin/samepage.js serve
+
+# Or point it at a specific folder
+node bin/samepage.js serve ~/my-notes
 ```
+
+Browser opens automatically at **http://localhost:8000**
+
+> **Note:** Port 8000 is required for GitHub OAuth. Make sure nothing else is running on it.
+
+## Initialize a new workspace
+
+If you're starting fresh in an empty folder:
+
+```bash
+mkdir ~/my-workspace
+cd ~/my-workspace
+node /path/to/samepage/bin/samepage.js init
+node /path/to/samepage/bin/samepage.js serve
+```
+
+`init` creates the following structure:
+
+```
+docs/        general documentation
+tasks/       kanban-style task folders (backlog, ready, in-progress, review, done)
+specs/       specifications
+glossary/    terminology
+.samepage/   app config
+```
+
+## Using the editor
+
+- **File browser** (left sidebar) — click any `.md` file to open it
+- **Editor** (main panel) — rich text editing with markdown under the hood
+- **Save** — `Cmd+S` (Mac) / `Ctrl+S` (Windows), or the save button
+- **GitHub sync** — connect a repo via the GitHub button to push your docs
 
 ## Troubleshooting
 
-**Port already in use?**
-- Server auto-finds free port (3000, 3001, etc.)
+**`vite: not found`**
+Run `npx vite build` instead of `vite build`, or use `npm run dev` which runs both build and serve together.
 
-**Browser doesn't open?**
-- Manually open: `http://127.0.0.1:3000`
+**Port 8000 already in use**
+Find and stop whatever is using it: `lsof -i :8000` then `kill <PID>`
 
-**File changes don't appear?**
-- Refresh browser to reload file tree
+**Browser doesn't open automatically**
+Navigate to `http://localhost:8000` manually.
 
----
-
-Ready? Run the commands above! 🎉
+**Changes not appearing in file browser**
+The file tree updates in real time via a watcher — if it seems stuck, refresh the page.
