@@ -1,0 +1,633 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f5f5f5;
+}
+
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: #2c3e50;
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.github-connect-btn {
+  background: #24292e;
+  color: white;
+  border: 1px solid #444;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.github-connect-btn:hover {
+  background: #3c4146;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.github-pull-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.github-pull-btn:hover {
+  background: #1565c0;
+}
+
+.github-push-btn {
+  background: #43a047;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.github-push-btn:hover {
+  background: #388e3c;
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* File Browser */
+.file-browser {
+  width: 280px;
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.browser-header {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.browser-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.browser-actions {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.create-doc-btn,
+.create-folder-btn {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.create-doc-btn:hover,
+.create-folder-btn:hover {
+  background: #1565c0;
+}
+
+.create-folder-btn {
+  background: #43a047;
+}
+
+.create-folder-btn:hover {
+  background: #388e3c;
+}
+
+.tree {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.tree-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  user-select: none;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tree-item:hover {
+  background: #f0f0f0;
+}
+
+.tree-item.active {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.tree-item.directory {
+  font-weight: 500;
+}
+
+.tree-item.drop-target {
+  background: #bbdefb;
+  border: 2px dashed #1976d2;
+}
+
+.tree-item[draggable="true"] {
+  cursor: grab;
+}
+
+.tree-item[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+/* Context Menu */
+.context-menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 140px;
+  z-index: 1000;
+  padding: 4px 0;
+}
+
+.context-menu-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.context-menu-item:hover {
+  background: #f0f0f0;
+}
+
+/* Rename Input */
+.rename-input {
+  border: 1px solid #1976d2;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 0.9rem;
+  margin-left: 4px;
+  outline: none;
+  width: 150px;
+}
+
+/* Confirm Dialog */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.dialog {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  min-width: 320px;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.dialog-message {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.dialog-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+}
+
+.dialog-btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.dialog-btn-cancel:hover {
+  background: #d0d0d0;
+}
+
+.dialog-btn-danger {
+  background: #d32f2f;
+  color: white;
+}
+
+.dialog-btn-danger:hover {
+  background: #c62828;
+}
+
+.dialog-btn-primary {
+  background: #24292e;
+  color: white;
+}
+
+.dialog-btn-primary:hover {
+  background: #3c4146;
+}
+
+/* GitHub Modal */
+.github-modal {
+  position: relative;
+  min-width: 360px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.modal-close-btn:hover {
+  color: #333;
+}
+
+.repo-section {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.repo-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.repo-input {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.repo-input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.repo-connected {
+  font-weight: 500;
+  color: #43a047;
+  margin: 0 0 0.5rem 0;
+}
+
+.repo-connected-section {
+  margin: 0.5rem 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.repo-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.repo-tab {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.repo-tab.active {
+  background: #1976d2;
+  color: white;
+  border-color: #1976d2;
+}
+
+.repo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Conflict Dialog */
+.conflict-dialog {
+  min-width: 600px;
+  max-width: 800px;
+}
+
+.conflict-file {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.conflict-diff {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.conflict-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.conflict-side h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.conflict-content {
+  flex: 1;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.75rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  overflow: auto;
+  max-height: 300px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Editor */
+.editor-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  margin: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.current-file {
+  font-size: 0.9rem;
+  color: #666;
+  font-family: 'Courier New', monospace;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.save-status {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.save-button {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.save-button:hover:not(:disabled) {
+  background: #1565c0;
+}
+
+.save-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Plate Editor Styles */
+.plate-editor {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.plate-editor [data-slate-editor] {
+  outline: none;
+  min-height: 100%;
+}
+
+.plate-editor p {
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+.plate-editor h1 {
+  font-size: 2rem;
+  margin: 1.5rem 0 1rem;
+  font-weight: 700;
+}
+
+.plate-editor h2 {
+  font-size: 1.5rem;
+  margin: 1.5rem 0 1rem;
+  font-weight: 600;
+}
+
+.plate-editor h3 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 1rem;
+  font-weight: 600;
+}
+
+.plate-editor ul,
+.plate-editor ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.plate-editor li {
+  margin: 0.5rem 0;
+}
+
+.plate-editor code {
+  background: #f5f5f5;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.plate-editor pre {
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.plate-editor pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+.plate-editor blockquote {
+  border-left: 3px solid #1976d2;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #666;
+  font-style: italic;
+}
+
+.plate-editor a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.plate-editor a:hover {
+  text-decoration: underline;
+}
+
+.plate-editor strong {
+  font-weight: 600;
+}
+
+.plate-editor em {
+  font-style: italic;
+}
+
+/* Placeholder */
+.editor-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+.placeholder-content {
+  text-align: center;
+}
+
+.placeholder-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+
+.placeholder-content p {
+  font-size: 1rem;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}

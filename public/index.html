@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Samepage</title>
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- Import maps for ES modules -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom": "https://esm.sh/react-dom@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+      "platejs": "https://esm.sh/platejs@42.0.0",
+      "platejs/react": "https://esm.sh/platejs@42.0.0/react?external=react",
+      "@platejs/markdown": "https://esm.sh/@platejs/markdown@42.0.0",
+      "remark-gfm": "https://esm.sh/remark-gfm@4.0.0"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

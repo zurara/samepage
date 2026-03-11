@@ -1,0 +1,171 @@
+# Progress Log
+
+## 2026-01-11
+
+- Created prd.json with 30 atomic PRD entries
+- Feature 1: File/Folder CRUD (15 items)
+- Feature 2: GitHub Sync (15 items)
+
+### PRD #0, #1: Context menu for files and folders
+- Added ContextMenu component to app.js
+- Right-click on files shows: Rename, Delete
+- Right-click on folders shows: Rename, New Folder, Delete
+- Added context menu CSS styles
+- Menu closes on click outside
+
+### PRD #6, #7: New Folder button and functionality
+- Added "New Folder" button below "New Document" in sidebar
+- Added createNewFolder() function in app.js
+- Added createNewFolder storage function (Untitled-Folder-N naming)
+- Added POST /api/folder/create endpoint
+- Folder auto-expands after creation
+
+### PRD #8: Create subfolder via right-click
+- Wired up "New Folder" context menu action
+- Creates subfolder inside the right-clicked folder
+- Parent and new folder auto-expand after creation
+
+### PRD #12, #13, #14: Delete with confirmation
+- Added ConfirmDialog component with Cancel/Delete buttons
+- Added deleteItem storage function (handles files and folders)
+- Added DELETE /api/item endpoint
+- Wired up "Delete" context action to show dialog
+- Dialog shows different message for folders (warns about contents)
+- Clears current file selection if deleted file was open
+
+### PRD #2, #3, #4, #5: Rename via context menu and double-click
+- Added renameItem storage function
+- Added POST /api/item/rename endpoint
+- Added inline rename input with Enter/Escape/blur handling
+- Works via context menu "Rename" or double-click
+- Updates current file selection if renamed file was open
+
+### PRD #9, #10, #11: Drag and drop move
+- Added moveItem storage function (prevents moving folder into itself)
+- Added POST /api/item/move endpoint
+- Added drag handlers (dragStart, dragOver, dragLeave, drop, dragEnd)
+- Visual feedback: folder highlights with dashed border on hover
+- Target folder auto-expands after drop
+- Updates current file selection if moved file was open
+
+### PRD #15: GitHub connect button in header
+- Added "Connect GitHub" button to App header in app.js
+- Added flexbox layout to .app-header (space-between)
+- Added .github-connect-btn styles (GitHub dark theme)
+- Button has placeholder onClick (logs to console)
+
+### PRD #16: GitHub setup modal opens
+- Added GitHubModal component with close button and overlay
+- Added showGitHubModal state to App component
+- Wired "Connect GitHub" button to open modal
+- Modal closes on X click or clicking outside
+- Added CSS styles for modal, close button, and primary button
+
+### PRD #17: OAuth redirect to GitHub
+- Added handleAuthorize function to GitHubModal
+- Constructs GitHub OAuth URL with client_id, redirect_uri, scope
+- Clicking "Authorize with GitHub" redirects to GitHub OAuth page
+
+### PRD #18, #19: OAuth callback and token storage
+- Added GET /api/github/callback endpoint to server
+- Added GET /api/github/status endpoint to check connection
+- Added saveGitHubConfig and getGitHubConfig to storage.js
+- Stores GitHub config in .samepage/config.json
+- Updated GitHubModal to show "Connected as [username]" when connected
+- App checks for ?github=success URL param and auto-opens modal
+- Button text changes to "GitHub Connected" when connected
+
+### PRD #20: Repo selection in modal
+- Added repo URL input field to GitHubModal (shown after OAuth)
+- Added "Connect Repository" button
+- Added CSS styles for repo-section, repo-label, repo-input
+
+### PRD #21: Connect to existing repo
+- Added POST /api/github/clone endpoint
+- Uses execSync to run git clone
+- Saves repo config to .samepage/config.json
+- Wired up onConnect handler in App to call clone endpoint
+- Page reloads after successful clone to refresh file tree
+
+### PRD #22: Create new repo from workspace
+- Added tabs UI to switch between "Connect Existing" and "Create New"
+- Added POST /api/github/create endpoint
+- Initializes git repo, adds all files, makes initial commit
+- Saves repo config (in production would create GitHub repo via API)
+- Added onCreate handler in App
+
+### PRD #23: Sync button when connected
+- Added Sync button to header (shows when repo is connected)
+- Added header-actions container for button grouping
+- Added CSS styles for sync button (green theme)
+
+### PRD #24, #25: Manual sync push/pull
+- Added POST /api/github/sync endpoint
+- Adds all changes, commits, pulls with rebase, then pushes
+- Wired up Sync button to call endpoint
+- Shows success/error message via alert
+
+### PRD #26, #27, #28, #29: Conflict detection and resolution
+- Added conflict detection to /api/github/sync endpoint
+- Returns { conflict: true, file, local, remote } when rebase conflicts
+- Added POST /api/github/resolve/local endpoint (keeps local, force pushes)
+- Added POST /api/github/resolve/remote endpoint (keeps remote)
+- Added ConflictDialog component showing side-by-side diff
+- Shows file path, local version, remote version
+- "Keep Local" and "Keep Remote" buttons
+- Wired up conflict state in App component
+- Sync button triggers conflict dialog when conflict detected
+- Handlers call resolve endpoints and reload as needed
+- Added CSS styles for conflict-dialog, conflict-file, conflict-diff, conflict-side, conflict-content
+
+### PRD #30-34: Real GitHub OAuth Implementation
+- Installed dotenv package for environment variable support
+- Created .env file with GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET
+- Added GET /api/github/config endpoint (exposes client_id, not secret)
+- Updated OAuth callback to exchange code for access_token via GitHub API
+- Fetches real user info from api.github.com/user
+- Stores real access_token in .samepage/config.json
+- Frontend fetches client_id from /api/github/config instead of hardcoding
+
+### PRD #35-39: Separate Pull/Push buttons
+- Replaced single "Sync" button with separate "Pull" and "Push" buttons
+- Added POST /api/github/pull endpoint (git pull with conflict detection)
+- Added POST /api/github/push endpoint (git add, commit, push)
+- Removed old /api/github/sync endpoint
+- Pull button (blue): fetches remote changes, reloads page
+- Push button (green): commits local changes and pushes to GitHub
+- Local changes stay local until explicit Push
+- Added CSS styles for .github-pull-btn and .github-push-btn
+
+### PRD #40: Modal shows connected repo status
+- Added hasRepo and repoName checks to GitHubModal
+- Shows "Repository: [name]" when repo is connected
+- Hides connect/create forms when repo already connected
+- Added .repo-connected CSS styles (green text)
+
+### PRD #41: Auto-detect default branch name
+- Fixed getDefaultBranch to handle "(unknown)" branch
+- Added fallback to local branch via `git branch --show-current`
+- Falls back to 'main' only if no branch detected
+
+### PRD #42: Pull handles empty remote repo gracefully
+- Added empty repo check via `git ls-remote --heads origin`
+- Returns friendly message: "Remote repository is empty. Use Push to upload your files."
+- Enhanced getDefaultBranch to detect remote branches (main/master/other)
+
+### PRD #43: Push to empty remote repo works
+- Fixed circular dependency (pull says push, push says pull)
+- Added empty repo detection in push error handler
+- Uses `git push -u origin HEAD:branch` for initial push to empty repo
+- Uses `-u` flag to set upstream tracking
+
+### PRD #44: Change connected GitHub repo from modal
+- Added "Change Repository" button to GitHubModal
+- Added changingRepo local state to toggle forms visibility
+- When clicked, shows Connect Existing / Create New tabs
+- Connecting new repo updates git remote via existing clone endpoint
+- Added .repo-connected-section CSS styles
+
+---
+
+## ALL PRD ITEMS COMPLETE (45/45)

@@ -1,0 +1,467 @@
+[
+  {
+    "category": "ui",
+    "description": "Right-click on file shows context menu",
+    "steps": [
+      "Right-click on a file in sidebar",
+      "Verify context menu appears with options: Rename, Delete"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Right-click on folder shows context menu",
+    "steps": [
+      "Right-click on a folder in sidebar",
+      "Verify context menu appears with options: Rename, New Folder, Delete"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Rename file via context menu",
+    "steps": [
+      "Right-click file, select 'Rename'",
+      "Verify input field appears with current name selected",
+      "Type new name, press Enter",
+      "Verify file renamed in tree and on disk"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Rename folder via context menu",
+    "steps": [
+      "Right-click folder, select 'Rename'",
+      "Verify input field appears with current name",
+      "Type new name, press Enter",
+      "Verify folder renamed in tree and on disk"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Rename file via double-click",
+    "steps": [
+      "Double-click on file name in sidebar",
+      "Verify name becomes editable input",
+      "Type new name, press Enter",
+      "Verify file renamed"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Cancel inline rename with Escape",
+    "steps": [
+      "Double-click file name to edit",
+      "Press Escape key",
+      "Verify original name restored, no changes"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "New Folder button in sidebar",
+    "steps": [
+      "Look at sidebar below 'New Document' button",
+      "Verify 'New Folder' button is visible"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Create folder via button",
+    "steps": [
+      "Click 'New Folder' button",
+      "Verify new folder 'Untitled-Folder-1' appears in tree",
+      "Verify folder created on disk"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Create subfolder via right-click",
+    "steps": [
+      "Right-click on existing folder",
+      "Select 'New Folder'",
+      "Verify new folder created inside that folder",
+      "Verify folder expanded to show new subfolder"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Move file into folder via drag",
+    "steps": [
+      "Drag a file in sidebar",
+      "Drop onto a folder",
+      "Verify file moved into folder",
+      "Verify file moved on disk"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Move folder into folder via drag",
+    "steps": [
+      "Drag a folder",
+      "Drop onto another folder",
+      "Verify folder moved as subfolder",
+      "Verify structure on disk"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Visual feedback during drag",
+    "steps": [
+      "Start dragging a file",
+      "Hover over a folder",
+      "Verify folder highlights as drop target"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Delete file with confirmation",
+    "steps": [
+      "Right-click file, select 'Delete'",
+      "Verify confirmation dialog appears",
+      "Click 'Delete' in dialog",
+      "Verify file removed from tree and disk"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Cancel delete",
+    "steps": [
+      "Right-click file, select 'Delete'",
+      "Click 'Cancel' in confirmation dialog",
+      "Verify file still exists"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Delete folder with contents",
+    "steps": [
+      "Right-click folder with files inside",
+      "Select 'Delete'",
+      "Verify dialog warns about contents",
+      "Confirm delete",
+      "Verify folder and contents removed"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "GitHub connect button in header",
+    "steps": [
+      "Look at app header",
+      "Verify 'Connect GitHub' button visible"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "GitHub setup modal opens",
+    "steps": [
+      "Click 'Connect GitHub' button",
+      "Verify modal appears with setup options"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "OAuth redirect to GitHub",
+    "steps": [
+      "Click 'Connect GitHub'",
+      "Click 'Authorize with GitHub' in modal",
+      "Verify redirect to GitHub OAuth page"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "OAuth callback success",
+    "steps": [
+      "Complete GitHub OAuth",
+      "Verify redirected back to app",
+      "Verify modal shows 'Connected as [username]'"
+    ],
+    "passes": true
+  },
+  {
+    "category": "data",
+    "description": "OAuth token stored",
+    "steps": [
+      "After successful OAuth",
+      "Verify token stored in .samepage/config.json",
+      "Verify token persists after page refresh"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Repo selection in modal",
+    "steps": [
+      "After OAuth success",
+      "Verify input for repo URL or dropdown of user repos"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Connect to existing repo",
+    "steps": [
+      "Enter GitHub repo URL",
+      "Click 'Connect'",
+      "Verify repo cloned to workspace",
+      "Verify files appear in sidebar"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Create new repo from workspace",
+    "steps": [
+      "Click 'Create new repo'",
+      "Enter repo name",
+      "Verify repo created on GitHub",
+      "Verify local files pushed"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Sync button when connected",
+    "steps": [
+      "After GitHub connected",
+      "Verify sync button appears in header",
+      "Verify shows sync status icon"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Manual sync push",
+    "steps": [
+      "Make local changes to a file",
+      "Click Sync button",
+      "Verify changes pushed to GitHub"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Manual sync pull",
+    "steps": [
+      "Make changes on GitHub directly",
+      "Click Sync button",
+      "Verify remote changes pulled to local"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Detect sync conflict",
+    "steps": [
+      "Edit file locally",
+      "Edit same file on GitHub",
+      "Click Sync",
+      "Verify conflict detected and dialog shown"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Conflict diff dialog",
+    "steps": [
+      "When conflict detected",
+      "Verify dialog shows local vs remote side-by-side",
+      "Verify 'Keep Local' and 'Keep Remote' buttons"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Resolve conflict keep local",
+    "steps": [
+      "In conflict dialog, click 'Keep Local'",
+      "Verify local version pushed to GitHub",
+      "Verify dialog closes"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Resolve conflict keep remote",
+    "steps": [
+      "In conflict dialog, click 'Keep Remote'",
+      "Verify remote version saved locally",
+      "Verify editor updates"
+    ],
+    "passes": true
+  },
+  {
+    "category": "config",
+    "description": "Environment variables for GitHub credentials",
+    "steps": [
+      "Create .env file with GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET",
+      "Add .env to .gitignore",
+      "Verify server loads credentials from environment"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "API endpoint provides GitHub client_id",
+    "steps": [
+      "Call GET /api/github/config",
+      "Verify response contains clientId from environment",
+      "Verify client secret is NOT exposed"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "OAuth redirect uses real client_id",
+    "steps": [
+      "Click 'Authorize with GitHub' in modal",
+      "Verify redirect URL contains real client_id from config",
+      "Verify redirect goes to github.com/login/oauth/authorize"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "OAuth callback exchanges code for token",
+    "steps": [
+      "After GitHub authorization, verify callback receives code",
+      "Verify server exchanges code for access_token via GitHub API",
+      "Verify access_token stored in .samepage/config.json"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "OAuth fetches real GitHub user info",
+    "steps": [
+      "After token exchange, verify server calls api.github.com/user",
+      "Verify real username displayed in modal (not mock data)",
+      "Verify user info persists after page refresh"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Separate Pull button in header",
+    "steps": [
+      "After GitHub repo connected",
+      "Verify Pull button visible in header",
+      "Button shows down arrow icon"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Separate Push button in header",
+    "steps": [
+      "After GitHub repo connected",
+      "Verify Push button visible in header",
+      "Button shows up arrow icon"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Pull button fetches remote changes",
+    "steps": [
+      "Make changes on GitHub directly",
+      "Click Pull button",
+      "Verify remote changes pulled to local",
+      "Verify file tree updates"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Push button commits and pushes",
+    "steps": [
+      "Make local changes to a file",
+      "Click Push button",
+      "Verify changes committed locally",
+      "Verify changes pushed to GitHub"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Local changes stay local until push",
+    "steps": [
+      "Make local changes to a file",
+      "Save the file",
+      "Verify changes are NOT automatically pushed",
+      "Changes only push when Push button clicked"
+    ],
+    "passes": true
+  },
+  {
+    "category": "ui",
+    "description": "Modal shows connected repo status",
+    "steps": [
+      "Connect to a GitHub repo",
+      "Open GitHub modal",
+      "Verify modal shows 'Repository: [repo-name]'",
+      "Verify connect forms are hidden when repo is connected"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Auto-detect default branch name",
+    "steps": [
+      "Connect to repo with 'master' branch",
+      "Click Pull or Push",
+      "Verify it uses correct branch (not hardcoded 'main')",
+      "Verify no '(unknown)' branch error"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Pull handles empty remote repo gracefully",
+    "steps": [
+      "Connect to an empty GitHub repo",
+      "Click Pull",
+      "Verify message: 'Remote repository is empty. Use Push to upload your files.'",
+      "No error shown"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Push to empty remote repo works",
+    "steps": [
+      "Connect to an empty GitHub repo",
+      "Click Push",
+      "Verify files pushed successfully",
+      "No 'pull first' error"
+    ],
+    "passes": true
+  },
+  {
+    "category": "functional",
+    "description": "Change connected GitHub repo from modal",
+    "steps": [
+      "Connect to a GitHub repo",
+      "Open GitHub modal",
+      "Click 'Change Repository' button",
+      "Enter new repo URL and connect",
+      "Verify git remote updated to new repo"
+    ],
+    "passes": true
+  }
+]

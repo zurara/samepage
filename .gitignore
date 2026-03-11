@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+.env
+*.log
+.samepage/docs.git/
+vite.config.js.timestamp-*
+dist/
+.claude/consolemsg/
+.claude/settings.local.json

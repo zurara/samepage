@@ -1,0 +1,44 @@
+{
+  "name": "@samepage/cli",
+  "version": "0.0.1",
+  "description": "AI-native markdown workspace",
+  "bin": {
+    "samepage": "./bin/samepage.js"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build && node bin/samepage.js serve",
+    "test": "node bin/samepage.js init"
+  },
+  "keywords": [
+    "markdown",
+    "workspace",
+    "ai",
+    "collaboration"
+  ],
+  "author": "Samepage",
+  "license": "MIT",
+  "dependencies": {
+    "@platejs/autoformat": "^52.0.11",
+    "@platejs/basic-nodes": "^52.0.11",
+    "@platejs/code-block": "^52.0.11",
+    "@platejs/indent": "^52.0.11",
+    "@platejs/link": "^52.0.11",
+    "@platejs/list": "^52.0.11",
+    "@platejs/markdown": "^52.3.1",
+    "chokidar": "^3.5.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "get-port": "^7.0.0",
+    "open": "^9.1.0",
+    "platejs": "^52.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.4.0"
+  },
+  "type": "module"
+}
